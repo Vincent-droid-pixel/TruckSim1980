@@ -3,8 +3,9 @@ function setup() {
 }
 
 function preload(){
-  img1 =loadImage("Images/truck.png");
-  img2 =loadImage("Images/explosion.png")
+  img1 =loadImage("Images/Vrachtwagen.png");
+  img2 =loadImage("Images/explosion.png");
+  img3 =loadImage("Images/tegenligger1.png");
 }
 
  
@@ -15,28 +16,37 @@ var [xpos, ypos, zpos, xspeed, yspeed] = [225, 225, 255, 0, 0];
 function draw() {
 	background(209,173,56);
 	
-  fill(204);
-  triangle(zpos, 18, xpos+500, 360, xpos, 360);
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 18, xpos+600, 400, xpos, 400);
 
-  fill(204);
-  triangle(zpos, 18, xpos+250, 360, xpos, 360);
+  fill(69, 69, 69)
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 18, xpos+300, 400, xpos, 400);
 
-  fill(204);
-  triangle(zpos, 18, xpos-500, 360, xpos, 360);
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 18, xpos-600, 400, xpos, 400);
 
-  fill(204);
-  triangle(zpos, 18, xpos-250, 360, xpos, 360);
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 18, xpos-300, 400, xpos, 400);
 
+  image(img3,250,50,50,50);
 
   image(img1,0,0,500,400);
 
-	textSize(32);
+	textSize(75);
 	if(xpos - 50 >= -350 && xpos + 50 <= 850) {
   xpos+= xspeed; 
   }
   else {
-    text('Game Over', 10, 30);
     image(img2,0,0,500,400);
+    text('Game Over', 70, 70,); 
   }
 }
 
@@ -45,7 +55,7 @@ function keyPressed() {
     xspeed = 5;
     } 
   else if (keyCode === RIGHT_ARROW) {
-    xspeed = -5;
+    xspeed = - 5;
     }
 }
 
