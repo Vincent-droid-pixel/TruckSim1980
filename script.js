@@ -1,5 +1,6 @@
 function setup() {
 	createCanvas(500, 400);
+  music.play();
   
 }
 let myFont;
@@ -81,6 +82,7 @@ function draw() {
     }
   }
   else if (screen==2){
+    music.stop()
     textSize(75);
     image(img2,0,0,500,400);
     text('Game Over', 70, 70,); 
