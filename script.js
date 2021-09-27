@@ -1,7 +1,5 @@
 function setup() {
-	createCanvas(500, 400);
-  music.play();
-  
+	createCanvas(500, 400);  
 }
 let myFont;
 let music;
@@ -35,10 +33,6 @@ function draw() {
   }else if (screen == 1){
     background(209,173,56);
 
-  //if (music.isPlaying()) { 
-  //} else {
-  //  music.play();
-  //}
 
     s = s + 1;
     if (s % 4 === 0){
@@ -121,14 +115,14 @@ function keyPressed() {
   }
 }
 
-function keyReleased() {
-	if (keyCode === LEFT_ARROW) {
-    xspeed = 0;
-    } 
-  else if (keyCode === RIGHT_ARROW) {
-    xspeed = 0;
-    }
-}
+//function keyReleased() {
+//	if (keyCode === LEFT_ARROW) {
+//    xspeed = 0;
+//    } 
+//  else if (keyCode === RIGHT_ARROW) {
+//    xspeed = 0;
+//    }
+//}
 
 function setLineDash(list) {
   drawingContext.setLineDash(list);
