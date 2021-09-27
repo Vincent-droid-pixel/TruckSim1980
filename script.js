@@ -7,7 +7,7 @@ let myFont;
 let music;
 
 function preload(){
-  img1 =loadImage("Images/Vrachtwagen.png");
+  img1 =loadImage("Images/truck.png");
   img2 =loadImage("Images/explosion.png");
   img3 =loadImage("Images/tegenligger1.png");
   img4 =loadImage("Images/startscreen.png") 
@@ -48,24 +48,33 @@ function draw() {
     fill(69, 69, 69)
     stroke(255, 255, 255);
     strokeWeight(2);
-    triangle(zpos, 18, xpos+300, 400, xpos, 400);
+    triangle(zpos, 50, xpos+300, 400, xpos, 400);
 
     fill(69, 69, 69);
     stroke(255, 255, 255);
     strokeWeight(2);
     //setLineDash([5, 10]);
-    triangle(zpos, 18, xpos+600, 400, xpos+300, 400);
+    triangle(zpos, 50, xpos+600, 400, xpos+300, 400);
 
     fill(69, 69, 69);
     stroke(255, 255, 255);
     strokeWeight(2);
-    triangle(zpos, 18, xpos-300, 400, xpos, 400);
+    triangle(zpos, 50, xpos-300, 400, xpos, 400);
 
     fill(69, 69, 69);
     stroke(255, 255, 255);
     strokeWeight(2);
     //setLineDash([5, 10]);
-    triangle(zpos, 18, xpos-600, 400, xpos-300, 400);
+    triangle(zpos, 50, xpos-600, 400, xpos-300, 400);
+
+    fill(74, 255, 231)
+    strokeWeight(0);
+    rect(0,0,500,50)
+
+    //let V_dist = p5.Vector.sub(zpos, xpos).mult(scale);
+    //let PX = p5.Vector.add(xpos, V_dist);
+    //ellipse(PX.x, PX.y, 40, 40)
+
 
     //image(img3,250,50,50,50);
     image(img1,0,0,500,400);
