@@ -1,7 +1,9 @@
 function setup() {
 	createCanvas(500, 400);
+  
 }
 let myFont;
+let music;
 
 function preload(){
   img1 =loadImage("Images/Vrachtwagen.png");
@@ -9,6 +11,7 @@ function preload(){
   img3 =loadImage("Images/tegenligger1.png");
   img4 =loadImage("Images/startscreen.png") 
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
+  music = loadSound('Geluiden/sb_indreams.mp3');
 }
 
 var score = 0
@@ -30,6 +33,11 @@ function draw() {
     }
   }else if (screen == 1){
     background(209,173,56);
+
+  //if (music.isPlaying()) { 
+  //} else {
+  //  music.play();
+  //}
 
     s = s + 1;
     if (s % 4 === 0){
@@ -78,15 +86,10 @@ function draw() {
     text('Game Over', 70, 70,); 
     text('Score: ' + score , 70, 200,); 
     textSize(25);
-    text('Druk op enter om naar het hoofdmenu te gaan', 10, 300,); 
+    text('PRESS ENTER TO GO TO THE MAIN MENU', 10, 300,); 
     
   }
 }
-
-//function mousePressed() {
-//	if (screen == 0) {
-//		screen = 1}
-//}
 
 function keyPressed() {
   if (screen == 0 && keyCode === ENTER){
@@ -94,6 +97,7 @@ function keyPressed() {
     xpos = 225
     score = 0
     s = 0
+    music.play();
   }
 	else if (keyCode === LEFT_ARROW) {
 		 xspeed = 5;
@@ -105,16 +109,6 @@ function keyPressed() {
     screen = 0
   }
 }
-
-
-//function keyPressed() {
-//  if (keyCode === LEFT_ARROW) {
-//    xspeed = 5;
-//    } 
-//  else if (keyCode === RIGHT_ARROW) {
-//    xspeed = - 5;
-//    }
-//}
 
 function keyReleased() {
 	if (keyCode === LEFT_ARROW) {
