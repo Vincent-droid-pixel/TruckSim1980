@@ -11,6 +11,7 @@ function preload(){
   img4 =loadImage("Images/startscreen.png") 
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
   music = loadSound('Geluiden/sb_indreams.mp3');
+  explosion = loadSound('Geluiden/boem2.mp3');
 }
 
 var score = 0
@@ -86,6 +87,7 @@ function draw() {
   }
   else if (screen==2){
     music.stop()
+    explosion.play();
     textSize(75);
     image(img2,0,0,500,400);
     text('Game Over', 70, 70,); 
