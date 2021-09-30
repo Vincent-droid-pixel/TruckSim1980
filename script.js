@@ -18,11 +18,12 @@ var score = 0
 var s = 0
 var i = 0
 var screen = 0;
-var [xpos, zpos, xspeed, yspeed] = [225, 255, 0, 0];
+var [xpos, zpos, xspeed, yspeed, gameover] = [225, 255, 0, 0, 0];
 
 function draw() {
   if (screen == 0){
-    i = i + 1
+    i = i + 1;
+    gameover = 0;
     textSize(30);
     textFont(myFont);
     fill('white')
@@ -86,8 +87,11 @@ function draw() {
     }
   }
   else if (screen==2){
-    music.stop()
-    explosion.play();
+    music.stop();
+    if (gameover == 0){
+      explosion.play();
+      gameover = 1;
+    }
     textSize(75);
     image(img2,0,0,500,400);
     text('Game Over', 70, 70,); 
