@@ -9,6 +9,7 @@ function preload(){
   img2 =loadImage("Images/explosion.png");
   img3 =loadImage("Images/tegenligger1.png");
   img4 =loadImage("Images/startscreen.png") 
+  img5 =loadImage("Images/zon.png")
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
   music = loadSound('Geluiden/sb_indreams.mp3');
   explosion = loadSound('Geluiden/boem2.mp3');
@@ -34,7 +35,6 @@ function draw() {
     }
   }else if (screen == 1){
     background(209,173,56);
-
 
     s = s + 1;
     if (s % 4 === 0){
@@ -65,7 +65,9 @@ function draw() {
 
     fill(74, 255, 231)
     strokeWeight(0);
-    rect(0,0,500,50)
+    rect(0,0,500,50);
+
+    image(img5,400,20,40,40);
 
     //let V_dist = p5.Vector.sub(zpos, xpos).mult(scale);
     //let PX = p5.Vector.add(xpos, V_dist);
