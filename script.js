@@ -23,6 +23,7 @@ var c = 0.0;
 var P0, P1, P2, P3, P4;
 var startTime, endTime;
 var score = 0;
+var highscore = 0;
 var s = 0;
 var i = 0;
 var b = 100;
@@ -51,8 +52,8 @@ function draw() {
     background(209,173,56);
 
     b = b + 1;
-    c = c + 0.004;
-    g = sin(c) * 200;
+    c = c + 0.0035;
+    g = -sin(c) * 200;
 
     //maken driehoeken die de weg zijn
     fill(69, 69, 69)
@@ -87,8 +88,8 @@ function draw() {
     if (b % 250 === 0){
       spawn_tegenliggers();
     }
-    P0 = createVector(245, 50);
-    P1 = createVector(apos, 400);
+    P0 = createVector(255, 50);
+    P1 = createVector(apos-30, 400);
     P2 = createVector(apos+250, 400);
     P3 = createVector(apos-250, 400);
     P4 = createVector(apos-50, 400);
@@ -97,12 +98,13 @@ function draw() {
     let scale = min(1, (currentTIme - startTime) / (endTime - startTime));
     let V_dist = p5.Vector.sub(P1, P0).mult(scale);
     let PX = p5.Vector.add(P0, V_dist);
-    image(img5,PX.x,PX.y,-g,-g);
+    image(img5,PX.x,PX.y,g,g);
     apos+= xspeed;
   
-    if (PX.y <=250 && PX.x >= 100 && PX.x <= 500){
-      screen=2;
-    }
+    //if (PX.y <=250 && PX.x >= 100 && PX.x <= 500){
+    //  screen=2;
+    //}
+
     //collision box
     rect(50,250,450,250)
 
@@ -110,10 +112,8 @@ function draw() {
     image(img1,0,0,500,400);
 
     //score-systeem
-    s = s + 1;
-    if (s % 4 === 0){
-      score = score + 1
-    }
+
+
     textSize(20);
     fill('white')
     text('Score: ' + score, 0, 50);
@@ -134,10 +134,15 @@ function draw() {
       explosion.play();
       gameover = 1;
     }
+    if (highscore < score){
+      highscore = score;
+    }
     textSize(75);
     image(img2,0,0,500,400);
     text('Game Over', 70, 70,); 
     text('Score: ' + score , 70, 200,); 
+    
+    text('Highscore:' + highscore, 70, 300);
     textSize(25);
     text('PRESS ENTER TO GO TO THE MAIN MENU', 10, 300,); 
   }
@@ -168,9 +173,12 @@ function keyPressed() {
   if (screen == 0 && keyCode === ENTER){
     screen = 1
     xpos = 225
+    apos = 225
     score = 0
     s = 0
     b = 0
+    c = 0;
+    g = 0;
     music.play();
     xspeed= 0;
     startTime = millis();
@@ -197,5 +205,5 @@ function spawn_tegenliggers() {
   startTime = millis();
   endTime = startTime + 5000;
   c = 0;
-  g= 0;
+  g = 0;
 }
