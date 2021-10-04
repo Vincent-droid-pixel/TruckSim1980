@@ -147,7 +147,7 @@ function draw() {
     
     text('Highscore:' + highscore, 70, 300);
     textSize(25);
-    text('PRESS ENTER TO GO TO THE MAIN MENU', 10, 300,); 
+    text('PRESS ENTER TO GO TO THE MAIN MENU', 10, 350,); 
   }
 }
 
