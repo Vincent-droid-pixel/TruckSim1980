@@ -101,7 +101,7 @@ function draw() {
     image(img5,PX.x,PX.y,g,g);
     apos+= xspeed;
   
-    //if (PX.y <=250 && PX.x >= 100 && PX.x <= 500){
+    //if (PX.y >= 0 && PX.y <= 250 && PX.x >= 100 && PX.x <= 500){
     //  screen=2;
     //}
 
@@ -112,7 +112,10 @@ function draw() {
     image(img1,0,0,500,400);
 
     //score-systeem
-
+    s = s + 1;
+    if (s % 4 === 0){
+      score = score + 1
+    }
 
     textSize(20);
     fill('white')
