@@ -1,5 +1,7 @@
 function setup() {
-	createCanvas(500, 400);  
+	createCanvas(1000, 800);  
+  let targets = ['P1','P2','P3','P4']
+  let target = random(targets);
 }
 let myFont;
 let music;
@@ -18,6 +20,8 @@ function preload(){
   music = loadSound('Geluiden/sb_indreams.mp3');
   explosion = loadSound('Geluiden/boem2.mp3');
 }
+
+
 var g = 0.0;
 var c = 0.0;
 var P0, P1, P2, P3, P4;
@@ -28,8 +32,9 @@ var s = 0;
 var i = 0;
 var b = 100;
 var screen = 0;
-var apos = 255
-var [xpos, zpos, xspeed, yspeed, gameover] = [225, 255, 0, 0, 0];
+var apos = 510
+var [xpos, zpos, xspeed, yspeed, gameover] = [450, 550, 0, 0, 0];
+
 
 
 function draw() {
@@ -39,98 +44,77 @@ function draw() {
     gameover = 0
     stroke(0);
     strokeWeight(5);
-    textSize(30);
+    textSize(60);
     textFont(myFont);
     fill('white')
     if (i % 40 === 0){
-      text('PRESS ENTER TO START',130,200)
+      text('PRESS ENTER TO START',260,400)
     } else if (i % 20 ===0){
-      image(img4,0,0,500,400);
+      image(img4,0,0,1000,800);
     }
   //spel
   }else if (screen == 1){
     background(209,173,56);
 
     b = b + 1;
-    c = c + 0.0035;
-    g = -sin(c) * 200;
+    // c = c + 0.0035;
+    // g = -sin(c) * 400;
+    c = c - 1;
+    // if (g <= -200){
+    //   g = g + 1;
+    // }
 
-    //maken driehoeken die de weg zijn
-    fill(69, 69, 69)
-    stroke(255, 255, 255);
-    strokeWeight(2);
-    triangle(zpos, 50, xpos+300, 400, xpos, 400);
+    //maken driehoeken die de weg zijn en horizon
+    weg()
 
-    fill(69, 69, 69);
-    stroke(255, 255, 255);
-    strokeWeight(2);
-    triangle(zpos, 50, xpos+600, 400, xpos+300, 400);
-
-    fill(69, 69, 69);
-    stroke(255, 255, 255);
-    strokeWeight(2);
-    triangle(zpos, 50, xpos-300, 400, xpos, 400);
-
-    fill(69, 69, 69);
-    stroke(255, 255, 255);
-    strokeWeight(2);
-    triangle(zpos, 50, xpos-600, 400, xpos-300, 400);
-
-    fill(74, 255, 231)
-    strokeWeight(0);
-    rect(0,0,500,50)
-
-    image(img9,400,20,40,40);
+    //zon
+    image(img9,800,40,80,80);
 
 
     //tegenliggers
-
     if (b % 250 === 0){
       spawn_tegenliggers();
     }
-    P0 = createVector(255, 50);
-    P1 = createVector(apos-30, 400);
-    P2 = createVector(apos+250, 400);
-    P3 = createVector(apos-250, 400);
-    P4 = createVector(apos-50, 400);
+    P0 = createVector(550, 100);
+    P1 = createVector(apos-60, 800);
+    P2 = createVector(apos+500, 800);
+    P3 = createVector(apos-600, 800);
+    P4 = createVector(apos+1000, 800);
 
     let currentTIme = millis();
     let scale = min(1, (currentTIme - startTime) / (endTime - startTime));
     let V_dist = p5.Vector.sub(P1, P0).mult(scale);
     let PX = p5.Vector.add(P0, V_dist);
-    image(img5,PX.x,PX.y,g,g);
+    image(img5,PX.x,PX.y,c,c);
     apos+= xspeed;
   
-    //if (PX.y >= 0 && PX.y <= 250 && PX.x >= 100 && PX.x <= 500){
-    //  screen=2;
-    //}
+    //game over bij collision
+    if (apos <= 500 && apos >= 400 && b % 500 === 0){
+      screen=2;
+    }
 
-    //collision box
-    rect(50,250,450,250)
 
     //vrachtwagen interieur
-    image(img1,0,0,500,400);
+    image(img1,0,0,1000,800);
 
     //score-systeem
     s = s + 1;
     if (s % 4 === 0){
       score = score + 1
     }
-
-    textSize(20);
+    textSize(40);
     fill('white')
-    text('Score: ' + score, 0, 50);
-
-
+    text('Score: ' + score, 0, 100);
 
     //zorgt voor game-over scherm
-    if(xpos - 50 >= -350 && xpos + 50 <= 850) {
+    if(xpos - 100 >= -700 && xpos + 100 <= 1700) {
     xpos+= xspeed; 
     }
     else {
       screen=2
     }
   }
+  //wat er gebeurt bij het game-over scherm
   else if (screen==2){
     music.stop()
     if (gameover == 0){
@@ -140,43 +124,69 @@ function draw() {
     if (highscore < score){
       highscore = score;
     }
-    textSize(75);
-    image(img2,0,0,500,400);
-    text('Game Over', 70, 70,); 
-    text('Score: ' + score , 70, 200,); 
+    textSize(150);
+    image(img2,0,0,1000,800);
+    text('Game Over', 140, 140,); 
+    text('Score: ' + score , 140, 400,); 
     
-    text('Highscore:' + highscore, 70, 300);
-    textSize(25);
-    text('PRESS ENTER TO GO TO THE MAIN MENU', 10, 350,); 
+    text('Highscore:' + highscore, 140, 600);
+    textSize(50);
+    text('PRESS ENTER TO GO TO THE MAIN MENU', 100, 700,); 
   }
+}
+
+//maken driehoeken die de weg zijn en horizon
+function weg(){
+  fill(69, 69, 69)
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 100, xpos+600, 800, xpos, 800);
+
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 100, xpos+1200, 800, xpos+600, 800);
+
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 100, xpos-600, 800, xpos, 800);
+
+  fill(69, 69, 69);
+  stroke(255, 255, 255);
+  strokeWeight(2);
+  triangle(zpos, 100, xpos-1200, 800, xpos-600, 800);
+
+  fill(74, 255, 231)
+  strokeWeight(0);
+  rect(0,0,1000,100)
 }
 
 //TEGENLIGGERS
 class tegenligger{
-  constructor(img,y,x,w,h,target,vy){
+  constructor(img,x,y,w,h,target,vy){
     this.img = random(img5,img6,img7,img8)
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
-    this.target = random(P1,P2,P3,P4);
+    
     this.vy = vy;
   }
 
   move() {
 
   }
-
-  display() {
-    tegenligger;
+  show() {
+    //image(img5, this.x, this.y,g,g);
   }
 }
 
 function keyPressed() {
   if (screen == 0 && keyCode === ENTER){
     screen = 1
-    xpos = 225
-    apos = 225
+    xpos = 450
+    apos = 450
     score = 0
     s = 0
     b = 0
@@ -190,10 +200,10 @@ function keyPressed() {
     //P1 = createVector(apos, 500);
   }
 	else if (keyCode === LEFT_ARROW) {
-		 xspeed = 5;
+		 xspeed = 10;
     } 
   else if (keyCode === RIGHT_ARROW){
-    xspeed = -5
+    xspeed = -10
   }
   else if (screen == 2 && keyCode === ENTER){
     screen = 0
