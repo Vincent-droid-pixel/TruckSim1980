@@ -29,13 +29,13 @@ function preload() {
   img4 = loadImage("Images/startscreen.png");
   img9 = loadImage("Images/zon.png")
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
-  //music = loadSound('Geluiden/sb_indreams.mp3');
+  music = loadSound('Geluiden/sb_indreams.mp3');
   explosion = loadSound('Geluiden/boem2.mp3');
 }
 
 var score = 0;
 var highscore = 0;
-var screen = 1;
+var screen = 0;
 var [xpos, zpos, xspeed, yspeed, gameover] = [450, 550, 0, 0, 0];
 
 var tegenLiggers = [];
@@ -85,23 +85,22 @@ function weg() {
 
 //menu
 function menu() {
-  i = i + 1
   gameover = 0
   stroke(0);
   strokeWeight(5);
   textSize(60);
   textFont(myFont);
   fill('white')
-  if (i % 40 === 0) {
+  if (frameCount % 40 === 0) {
     text('PRESS ENTER TO START', 260, 400)
-  } else if (i % 20 === 0) {
+  } else if (frameCount % 20 === 0) {
     image(img4, 0, 0, 1000, 800);
   }
 }
 
 //gameover scherm
 function gameOver() {
-  //music.stop()
+  music.stop()
   if (gameover == 0) {
     explosion.play();
     gameover = 1;
@@ -207,12 +206,10 @@ function keyPressed() {
   if (screen == 0 && keyCode === ENTER) {
     screen = 1
     xpos = 450
-    apos = 450
+    this.apos = 450
     score = 0
-    s = 0
     b = 0
-    c = 0;
-    g = 0;
+    this.c = 0;
     music.loop();
     xspeed = 0;
     startTime = millis();
