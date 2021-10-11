@@ -1,8 +1,7 @@
 function setup() {
   createCanvas(1000, 800);
-  let targets = ['P1', 'P2', 'P3', 'P4']
-  let target = random(targets);
 }
+
 let myFont;
 let music;
 
@@ -33,6 +32,8 @@ function preload() {
   explosion = loadSound('Geluiden/boem2.mp3');
 }
 
+var spawnen = 250;
+var spawndeler = 5;
 var score = 0;
 var highscore = 0;
 var screen = 0;
@@ -108,12 +109,15 @@ function gameOver() {
   if (highscore < score) {
     highscore = score;
   }
-  textSize(150);
   image(img2, 0, 0, 1000, 800);
+  textSize(150);
+  stroke(0,0,0);
+  strokeWeight(10);
   text('Game Over', 140, 140);
-  text('Score: ' + score, 140, 400);
-
-  text('Highscore:' + highscore, 140, 600);
+  textSize(100)
+  strokeWeight(4);
+  text('Score: ' + score, 140, 300);
+  text('Highscore:' + highscore, 140, 400);
   textSize(50);
   text('PRESS ENTER TO GO TO THE MAIN MENU', 100, 700);
 }
@@ -128,7 +132,15 @@ function game() {
   //zon
   image(img9, 800, 40, 80, 80);
 
-  if (frameCount % 250 === 0) {
+  if (frameCount % 1000 === 0) {
+    spawnen = spawnen -spawndeler;
+  }
+
+  if (spawnen == 0){
+    spawndeler = 0
+  }
+
+  if (frameCount % spawnen === 0) {
     tegenLiggers.push(new Tegenligger());
   }
 
@@ -148,10 +160,12 @@ function game() {
   fill('white')
   text('Score: ' + score, 0, 100);
 
-  //zorgt voor game-over scherm
+  //zorgt voor spelverloop als je niet game-over bent
   if (xpos - 100 >= -700 && xpos + 100 <= 1700) {
     xpos += xspeed;
+    this.apos += xspeed;
   }
+  //zorgt voor game-over scherm
   else {
     screen = 2
   }
@@ -165,7 +179,7 @@ class Tegenligger {
     this.lane = int(random(4)) + 1;
     this.startTime = millis();
     this.endTime = this.startTime + 5000;
-    this.apos = 510;
+    this.apos = apos;
 
     this.p0 = createVector(550, 100);
     console.log(this.lane, this.apos);
@@ -180,23 +194,21 @@ class Tegenligger {
 
     this.c++;
 
-
     let scale = min(1, (millis() - this.startTime) / (this.endTime - this.startTime));
 
-    // let scale = 5
     let v_dist = p5.Vector.sub(this.p1, this.p0).mult(scale);
     let px = p5.Vector.add(this.p0, v_dist);
-    this.apos += xspeed;
     this.p1 = getLane(this.lane, this.apos);
     image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
-
+    this.apos += xspeed;
     if (px.y > 600) {
       let idx = tegenLiggers.indexOf(this);
       tegenLiggers.splice(idx, 1);
       //screen = 2;
     }
-    //game over bij collision
-    // if (this.apos <= 500 && this.apos >= 400) {
+
+    // game over bij collision
+    // if (px.y = 800 && px.x >= 200 && px.x <= 500) {
     //   screen = 2;
     // }
   }
@@ -212,6 +224,8 @@ function keyPressed() {
     this.c = 0;
     music.loop();
     xspeed = 0;
+    spawnen = 250;
+    spawndeler = 5;
     startTime = millis();
     endTime = startTime + 5000;
     //P0 = createVector(255, 50);
