@@ -29,9 +29,11 @@ function preload() {
   img9 = loadImage("Images/zon.png")
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
   music = loadSound('Geluiden/sb_indreams.mp3');
+  startmuziek = loadSound('Geluiden/MenuMuziek.mp3')
   explosion = loadSound('Geluiden/boem2.mp3');
 }
 
+var menumuziek = 0;
 var spawnen = 250;
 var spawndeler = 5;
 var score = 0;
@@ -96,7 +98,13 @@ function menu() {
     text('PRESS ENTER TO START', 260, 400)
   } else if (frameCount % 20 === 0) {
     image(img4, 0, 0, 1000, 800);
+    if (menumuziek == 0){
+      startmuziek.loop();
+      menumuziek = 1;
+    }
   }
+  
+
 }
 
 //gameover scherm
@@ -208,7 +216,7 @@ class Tegenligger {
     }
 
     // game over bij collision
-    // if (px.y = 800 && px.x >= 200 && px.x <= 500) {
+    // if (px.y = 800 && px.x > 200 && px.x < 500) {
     //   screen = 2;
     // }
   }
@@ -223,6 +231,7 @@ function keyPressed() {
     b = 0
     this.c = 0;
     music.loop();
+    startmuziek.stop();
     xspeed = 0;
     spawnen = 250;
     spawndeler = 5;
@@ -238,7 +247,8 @@ function keyPressed() {
     xspeed = -10
   }
   else if (screen == 2 && keyCode === ENTER) {
-    screen = 0
+    screen = 0;
+    menumuziek = 0;
     image(img4, 0, 0, 1000, 800);
   }
 }
