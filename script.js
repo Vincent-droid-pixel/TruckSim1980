@@ -8,7 +8,7 @@ let music;
 function getLane(lane, apos) {
 
   if (lane == 1) {
-    return createVector(apos - 60, 800)
+    return createVector(apos - 70, 800)
   }
   if (lane == 2) {
     return createVector(apos + 500, 800)
@@ -195,7 +195,7 @@ class Tegenligger {
   }
 
   move() {
-
+    constructor()
   }
 
   show() {
@@ -220,6 +220,11 @@ class Tegenligger {
     //   screen = 2;
     // }
   }
+}
+
+//cactussen
+class Cactus {
+
 }
 
 function keyPressed() {
