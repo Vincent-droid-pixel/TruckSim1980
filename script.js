@@ -168,9 +168,9 @@ function game() {
 
 
   //vrachtwagen interieur
-  //image(img1, 0, 0, 1000, 800);
-  fill("red")
-  rect(collisionRect.x, collisionRect.y, collisionRect.w, collisionRect.h);
+  image(img1, 0, 0, 1000, 800);
+  //fill("red")
+  //rect(collisionRect.x, collisionRect.y, collisionRect.w, collisionRect.h);
 
 
 
@@ -221,13 +221,13 @@ class Tegenligger {
     let v_dist = p5.Vector.sub(this.p1, this.p0).mult(scale);
     let px = p5.Vector.add(this.p0, v_dist);
     this.p1 = getLane(this.lane, this.apos);
-    fill("green");
-    rect(px.x, px.y, this.c, this.c)
+    //fill("green");
+    //rect(px.x, px.y, this.c, this.c)
     image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
     this.apos += xspeed;
 
     // remove from collision detection after this point
-    if (px.y - this.c >= collisionRect.y) {
+    if (px.y + this.c - 300 >= collisionRect.y) {
       let idx = tegenLiggers.indexOf(this);
       tegenLiggers.splice(idx, 1);      
     }
