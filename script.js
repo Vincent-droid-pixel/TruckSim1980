@@ -223,18 +223,18 @@ class Tegenligger {
     this.p1 = getLane(this.lane, this.apos);
     fill("green");
     rect(px.x, px.y, this.c, this.c)
-    image(tegenliggerImg, px.x, px.y, this.c, this.c);
+    image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
     this.apos += xspeed;
 
     // remove from collision detection after this point
-    if (px.y >= collisionRect.y) {
+    if (px.y - this.c >= collisionRect.y) {
       let idx = tegenLiggers.indexOf(this);
       tegenLiggers.splice(idx, 1);      
     }
 
     // game over bij collision  
-    if (px.y + this.c > collisionRect.y) {      
-      if (collisionRect.x + collisionRect.w > px.x && collisionRect.x < px.x + this.c) {        
+    if (px.y > collisionRect.y) {      
+      if (collisionRect.x + collisionRect.w > px.x - this.c  && collisionRect.x < px.x) {        
         screen = 2;
       }
     } 
