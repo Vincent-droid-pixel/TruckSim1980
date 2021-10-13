@@ -242,6 +242,7 @@ function keyPressed() {
     spawndeler = 5;
     startTime = millis();
     endTime = startTime + 5000;
+    tegenLiggers = [];
     //P0 = createVector(255, 50);
     //P1 = createVector(apos, 500);
   }
@@ -252,6 +253,7 @@ function keyPressed() {
     xspeed = -10
   }
   else if (screen == 2 && keyCode === ENTER) {
+
     screen = 0;
     menumuziek = 0;
     image(img4, 0, 0, 1000, 800);
