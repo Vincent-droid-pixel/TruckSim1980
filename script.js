@@ -1,6 +1,4 @@
-function setup() {
-  createCanvas(1000, 800);
-}
+
 
 let myFont;
 let music;
@@ -40,8 +38,20 @@ var score = 0;
 var highscore = 0;
 var screen = 0;
 var [xpos, zpos, xspeed, yspeed, gameover] = [450, 550, 0, 0, 0];
+var collisionRect;
 
 var tegenLiggers = [];
+
+function setup() {
+  createCanvas(1000, 800);
+
+  collisionRect = {
+    x: 200,
+    y: height - 200,
+    w: 200,
+    h: 300
+  };
+}
 
 function draw() {
 
@@ -98,12 +108,12 @@ function menu() {
     text('PRESS ENTER TO START', 260, 400)
   } else if (frameCount % 20 === 0) {
     image(img4, 0, 0, 1000, 800);
-    if (menumuziek == 0){
+    if (menumuziek == 0) {
       startmuziek.loop();
       menumuziek = 1;
     }
   }
-  
+
 
 }
 
@@ -119,7 +129,7 @@ function gameOver() {
   }
   image(img2, 0, 0, 1000, 800);
   textSize(150);
-  stroke(0,0,0);
+  stroke(0, 0, 0);
   strokeWeight(10);
   text('Game Over', 140, 140);
   textSize(100)
@@ -141,10 +151,10 @@ function game() {
   image(img9, 800, 40, 80, 80);
 
   if (frameCount % 1000 === 0) {
-    spawnen = spawnen -spawndeler;
+    spawnen = spawnen - spawndeler;
   }
 
-  if (spawnen == 0){
+  if (spawnen == 0) {
     spawndeler = 0
   }
 
@@ -158,7 +168,11 @@ function game() {
 
 
   //vrachtwagen interieur
-  image(img1, 0, 0, 1000, 800);
+  //image(img1, 0, 0, 1000, 800);
+  fill("red")
+  rect(collisionRect.x, collisionRect.y, collisionRect.w, collisionRect.h);
+
+
 
   //score-systeem
   if (frameCount % 4 === 0) {
@@ -207,18 +221,24 @@ class Tegenligger {
     let v_dist = p5.Vector.sub(this.p1, this.p0).mult(scale);
     let px = p5.Vector.add(this.p0, v_dist);
     this.p1 = getLane(this.lane, this.apos);
-    image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
+    fill("green");
+    rect(px.x, px.y, this.c, this.c)
+    image(tegenliggerImg, px.x, px.y, this.c, this.c);
     this.apos += xspeed;
-    if (px.y > 600) {
+
+    // remove from collision detection after this point
+    if (px.y >= collisionRect.y) {
       let idx = tegenLiggers.indexOf(this);
-      tegenLiggers.splice(idx, 1);
-      //screen = 2;
+      tegenLiggers.splice(idx, 1);      
     }
 
-    // game over bij collision
-    // if (px.y = 800 && px.x > 200 && px.x < 500) {
-    //   screen = 2;
-    // }
+    // game over bij collision  
+    if (px.y + this.c > collisionRect.y) {      
+      if (collisionRect.x + collisionRect.w > px.x && collisionRect.x < px.x + this.c) {        
+        screen = 2;
+      }
+    } 
+   
   }
 }
 
@@ -231,10 +251,10 @@ function keyPressed() {
   if (screen == 0 && keyCode === ENTER) {
     screen = 1
     xpos = 450
-    this.apos = 450
+    apos = 450
     score = 0
     b = 0
-    this.c = 0;
+    c = 0;
     music.loop();
     startmuziek.stop();
     xspeed = 0;
