@@ -44,8 +44,10 @@ function preload() {
   music = loadSound('Geluiden/sb_indreams.mp3');
   startmuziek = loadSound('Geluiden/MenuMuziek.mp3')
   explosion = loadSound('Geluiden/boem2.mp3');
+  whoosh = loadSound('Geluiden/whoosh.wav')
 }
 
+var wind = 0
 var menumuziek = 0;
 var spawnen = 125;
 var spawndeler = 5;
@@ -258,60 +260,67 @@ class Tegenligger {
     // remove from collision detection after this point
     if (px.y + this.c - 300 >= collisionRect.y) {
       let idx = tegenLiggers.indexOf(this);
-      tegenLiggers.splice(idx, 1);      
+      tegenLiggers.splice(idx, 1); 
+      wind = 0;     
     }
 
     // game over bij collision  
     if (px.y > collisionRect.y) {      
       if (collisionRect.x + collisionRect.w > px.x - this.c  && collisionRect.x < px.x) {        
         screen = 3;
+      } 
+      else {
+        if (wind == 0){
+          whoosh.play();
+          wind = 1
+        }
       }
-    } 
+    }
    
   }
 }
 
 //cactussen
-class Cactus {
- constructor(){
-   this.vy = vy;
-   this.c = 0;
-   this.lane = int(random(4)) + 5;
-   this.startTime = millis();
-   this.endTime = this.startTime + 5000;
-   this.apos = apos;
+// class Cactus {
+//  constructor(){
+//    this.vy = vy;
+//    this.c = 0;
+//    this.lane = int(random(4)) + 5;
+//    this.startTime = millis();
+//    this.endTime = this.startTime + 5000;
+//    this.apos = apos;
  
-   this.p0 = createVector(550, 100);
-   console.log(this.lane, this.apos);
-   this.p1 = getLane(this.lane, this.apos);
- }
+//    this.p0 = createVector(550, 100);
+//    console.log(this.lane, this.apos);
+//    this.p1 = getLane(this.lane, this.apos);
+//  }
  
- move(){
+//  move(){
  
- }
+//  }
  
- show(){
-   this.c++;
+//  show(){
+//    this.c++;
  
-   let scale = min(1, (millis() - this.startTime) / (this.endTime - this.startTime));
+//    let scale = min(1, (millis() - this.startTime) / (this.endTime - this.startTime));
  
-   let v_dist = p5.Vector.sub(this.p1, this.p0).mult(scale);
-   let px = p5.Vector.add(this.p0, v_dist);
-   this.p1 = getLane(this.lane, this.apos);
-   image(cactusImg, px.x, px.y, -this.c, -this.c);
-   this.apos += xspeed;
-   if (px.y > 600) {
-     let idx = tegenLiggers.indexOf(this);
-     tegenLiggers.splice(idx, 1);
-     //screen = 3;
-   }
+//    let v_dist = p5.Vector.sub(this.p1, this.p0).mult(scale);
+//    let px = p5.Vector.add(this.p0, v_dist);
+//    this.p1 = getLane(this.lane, this.apos);
+//    image(cactusImg, px.x, px.y, -this.c, -this.c);
+//    this.apos += xspeed;
+//    if (px.y > 600) {
+//      let idx = tegenLiggers.indexOf(this);
+//      tegenLiggers.splice(idx, 1);
+//      //screen = 3;
+//    }
  
-   // game over bij collision
-   // if (px.y = 800 && px.x > 200 && px.x < 500) {
-   //   screen = 3;
-   // }
- }
-}
+//    // game over bij collision
+//    // if (px.y = 800 && px.x > 200 && px.x < 500) {
+//    //   screen = 3;
+//    // }
+//  }
+// }
 
 function keyPressed() {
  if (screen == 1 && keyCode === ENTER) {
