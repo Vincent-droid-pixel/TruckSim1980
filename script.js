@@ -150,6 +150,8 @@ function gameOver() {
   if (highscore < score) {
     highscore = score;
   }
+  let idx = tegenLiggers.indexOf(this);
+  tegenLiggers.splice(idx, 1);      
   image(img2, 0, 0, 1000, 800);
   textSize(150);
   stroke(0, 0, 0);
@@ -322,7 +324,7 @@ function keyPressed() {
    music.loop();
    startmuziek.stop();
    xspeed = 0;
-   spawnen = 250;
+   spawnen = 125;
    spawndeler = 5;
    startTime = millis();
    endTime = startTime + 5000;
