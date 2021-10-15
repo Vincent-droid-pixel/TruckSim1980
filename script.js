@@ -18,16 +18,16 @@ function getLane(lane, apos) {
    return createVector(apos + 1000, 800)
  }
    if (lane == 5) {
-   return createVector(apos - 900, 800)
+   return createVector(apos - 1200, 800)
  }
  if (lane == 6) {
    return createVector(apos + 1500, 800)
  }
  if (lane == 7) {
-   return createVector(apos - 800, 800)
+   return createVector(apos - 1100, 800)
  }
  if (lane == 8) {
-   return createVector(apos + 1400, 800)
+   return createVector(apos + 1600, 800)
  }
 }
 
@@ -36,6 +36,7 @@ function preload() {
   img1 = loadImage("Images/truck.png");
   img2 = loadImage("Images/explosion.png");
   tegenliggerImg = loadImage("Images/tegenligger1.png");
+  cactusImg = loadImage("Images/cactus3.png")
   tutorial = loadImage('Images/tutorial.png')
   img4 = loadImage("Images/startscreen.png");
   img9 = loadImage("Images/zon.png")
@@ -46,7 +47,7 @@ function preload() {
 }
 
 var menumuziek = 0;
-var spawnen = 250;
+var spawnen = 125;
 var spawndeler = 5;
 var score = 0;
 var highscore = 0;
@@ -188,7 +189,6 @@ function game() {
     t.show();
   });
 
-
   //vrachtwagen interieur
   image(img1, 0, 0, 1000, 800);
   //fill("red")
@@ -205,7 +205,7 @@ function game() {
   text('Score: ' + score, 0, 100);
 
   //zorgt voor spelverloop als je niet game-over bent
-  if (xpos - 100 >= -700 && xpos + 100 <= 1700) {
+  if (xpos - 100 >= -1300 && xpos + 100 <= 2300) {
     xpos += xspeed;
     this.apos += xspeed;
   }
@@ -220,7 +220,7 @@ class Tegenligger {
   constructor(vy) {
     this.vy = vy;
     this.c = 0;
-    this.lane = int(random(4)) + 1;
+    this.lane = int(random(8)) + 1;
     this.startTime = millis();
     this.endTime = this.startTime + 5000;
     this.apos = apos;
@@ -245,7 +245,12 @@ class Tegenligger {
     this.p1 = getLane(this.lane, this.apos);
     //fill("green");
     //rect(px.x, px.y, this.c, this.c)
-    image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
+    if (this.lane <= 4){
+      image(tegenliggerImg, px.x, px.y, -this.c, -this.c);
+    }
+    else if (this.lane >= 5){
+      image(cactusImg, px.x, px.y, -this.c, -this.c);
+    }
     this.apos += xspeed;
 
     // remove from collision detection after this point
@@ -324,7 +329,7 @@ function keyPressed() {
    //P0 = createVector(255, 50);
    //P1 = createVector(apos, 500);
  }
- else if (screen == 0 && keyCode === ENTER) {
+ else if (screen == 0 && keyCode === 32) {
    screen = 1
  }
  else if (keyCode === LEFT_ARROW) {
