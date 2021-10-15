@@ -37,7 +37,8 @@ function preload() {
   img2 = loadImage("Images/explosion.png");
   tegenliggerImg = loadImage("Images/tegenligger1.png");
   cactusImg = loadImage("Images/cactus3.png")
-  tutorial = loadImage('Images/tutorial.png')
+  tutorial = loadImage('Images/tutorial.jpg')
+  horizonImg = loadImage('Images/sand.jpg')
   img4 = loadImage("Images/startscreen.png");
   img9 = loadImage("Images/zon.png")
   myFont = loadFont('Fonts/StickNoBills-Regular.ttf');
@@ -111,9 +112,9 @@ function weg() {
   strokeWeight(2);
   triangle(zpos, 100, xpos - 1200, 800, xpos - 600, 800);
 
-  fill(74, 255, 231)
-  strokeWeight(0);
-  rect(0, 0, 1000, 100)
+  // fill(74, 255, 231)
+  // strokeWeight(0);
+  image(horizonImg, 0, 0, 1000, 100)
 }
 
 //introscherm
